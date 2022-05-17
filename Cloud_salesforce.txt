@@ -1,0 +1,60 @@
+* ANYTHING__C  => it is custom/user made object or its field
+
+1. create custom objects and add fields if required  (in main menu -> object manager)          (Objects are database tables that allow us to store data specific to the organization in salesforce.)
+	object lable can be same but Object Name field should be unique always , Object Name can be accessed by ObjectName__c
+
+2. create tab for each custom object so that it can be accessed within app (in main menu -> seach for tab)
+
+3. create App with following step (in main menu -> seach app manager)
+
+	1. enter unique app name
+	2. skip adding utility items
+	3. add navigation items select all the objects tab created and Home
+	4. add system administator profile
+	5. save and finish 
+
+
+4. create trigger on one of the object so that after inserting in one objects , other object also will be inserted 
+
+	in setting -> developer console ->  new  -> trigger 
+	
+			then choose lable for trigger and also select on which objects trigger need to set
+
+--------------------------------------------------------------------------------------------------------------	
+
+trigger classroom_t on Student__c (before insert) {
+    
+   List<Classroom__c> StudentList = new List<Classroom__c>();      // list of object1 on which entry to be done  
+    for (Student__c obj : trigger.new){                             // same object1 on which trigger is done     
+        
+        Classroom__c stud = new Classroom__c();               // object2 on which entry has to be done after insert on object1         
+        stud.Name = obj.Name;  
+        stud.Teacher__c = obj.Teacher_name__c; 
+     
+                                
+
+        StudentList.add(stud);                           
+    }
+    
+    insert StudentList ;  
+}
+
+----------------------------------------------------------------------------------------------------------------
+
+Reletionship :
+
+
+we have 2 types of reletionship :
+	1. Lookup   :  1-1  OR 1-MANY  ,  deleteing parent record will cause only blank field in child objects field
+	2. Master-detail :   MANY-MANY    (on cascade)
+
+APex :
+
+	OOp which has java like syntax and acts like procedures of database
+	stored and compiled on clooud
+	collection to store data like array
+	uses SSQL salesforce SQL
+
+
+
+	      
